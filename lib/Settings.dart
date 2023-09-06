@@ -16,18 +16,18 @@ class _AccountSettingWidgetState extends State<AccountSettingWidget> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Colors.white, // Replace with your desired background color
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.red[800], // Replace with your desired app bar color
+          backgroundColor: Colors.red[800],
           automaticallyImplyLeading: false,
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back_rounded,
-              color: Colors.black, // Replace with your desired icon color
+              color: Colors.black,
               size: 30,
             ),
             onPressed: () {
-              print('IconButton pressed ...');
+              Navigator.of(context).pop();
             },
           ),
           title: Text(
@@ -48,7 +48,7 @@ class _AccountSettingWidgetState extends State<AccountSettingWidget> {
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.grey, // Replace with your desired color
+                    color: Colors.grey,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Padding(
@@ -59,10 +59,10 @@ class _AccountSettingWidgetState extends State<AccountSettingWidget> {
                           width: 90,
                           height: 90,
                           decoration: BoxDecoration(
-                            color: Colors.grey, // Replace with your desired color
+                            color: Colors.grey,
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Colors.black, // Replace with your desired color
+                              color: Colors.black,
                               width: 2,
                             ),
                           ),
@@ -156,7 +156,7 @@ class _AccountSettingWidgetState extends State<AccountSettingWidget> {
                   width: double.infinity,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: Colors.red[800], // Replace with your desired color
+                    color: Colors.red[800], //
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Padding(
@@ -198,7 +198,7 @@ class _AccountSettingWidgetState extends State<AccountSettingWidget> {
                   width: double.infinity,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: Colors.red[800], // Replace with your desired color
+                    color: Colors.red[800],
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Padding(
@@ -240,7 +240,7 @@ class _AccountSettingWidgetState extends State<AccountSettingWidget> {
                   width: double.infinity,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: Colors.red[800], // Replace with your desired color
+                    color: Colors.red[800],
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Padding(
@@ -282,7 +282,7 @@ class _AccountSettingWidgetState extends State<AccountSettingWidget> {
                   width: double.infinity,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: Colors.red[800], // Replace with your desired color
+                    color: Colors.red[800],
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Padding(
@@ -324,7 +324,7 @@ class _AccountSettingWidgetState extends State<AccountSettingWidget> {
                   width: double.infinity,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: Colors.red[800], // Replace with your desired color
+                    color: Colors.red[800],
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Padding(

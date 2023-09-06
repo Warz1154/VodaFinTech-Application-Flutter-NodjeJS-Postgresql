@@ -4,55 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:postgres/postgres.dart';
 import 'HomePage.dart';
-import 'Wrong_alert.dart';
+import 'Alerts/Wrong_alert.dart';
 import 'main.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-
-
-
-Future<List<dynamic>> fetchData(String username, String password) async {
-  final response = await http.post(
-      Uri.parse('http://192.168.0.151:5001/get_data?username=$username&password=$password')
-  );
-
-  if (response.statusCode == 200) {
-    // If the server returns a 200 OK response, then parse the JSON.
-    List<dynamic> data = jsonDecode(response.body);
-    return data;
-  } else {
-    // If the server returns an unsuccessful response code, throw an exception.
-    throw Exception('Failed to load data');
-  }
-}
-
-Future<void> _showAlertDialog(BuildContext context) async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog( // <-- SEE HERE
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: const <Widget>[
-              Text('Wrong Username or Password!',
-              ),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('Ok'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
+import 'package:vodaclone/Queries/Authentication/Authenticate.dart';
 
 
 class Sign_in extends StatefulWidget{
@@ -246,28 +202,34 @@ class  _Sign_in_state extends State<Sign_in>
                         // Store user input in the variable
                         var usernameInput = UsernameController.text;
                         var passwordInput = PwController.text;
-                        List<dynamic> data;
+                        List<dynamic>? data;
 
                         print("$usernameInput $passwordInput");
 
                         try {
-                          data  = await fetchData(usernameInput, passwordInput);
-                          if (data.isNotEmpty && data[0] is Map) {
-                            Map<String, dynamic> firstRecord = data[0];
-                            String username = firstRecord['username'];
-                            String password = firstRecord['password'];
-                            print('Username: $username');
-                            print('Password: $password');
+                          data = await authenticate(usernameInput, passwordInput);
+                          print(data);
+                          var authenticateUser = data[0]['authenticate_user'];
 
-                            if(username == usernameInput && password == passwordInput){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => HomePage()) // Added closing parenthesis here
-                              );
+                          var tupleValues = authenticateUser.split(',');
+                          var token_id = tupleValues[0].replaceAll('(', '').trim();
+                          var user_id = tupleValues[1].replaceAll(')', '').trim();
 
-                            }
+                          print('Token: $token_id');
+                          print('user_id: $user_id');
 
+                          if (token_id != '0' && user_id.isNotEmpty) {
+                            // Clear username/email and password before entering the homepage
+                            UsernameController.clear();
+                            PwController.clear();
+
+                            // If conditions are met, navigate to the Home page
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Homepage(user_id: user_id, token_id: token_id,)), // Fixed the closing parenthesis here
+                            );
                           }
+
                           else {
                             openAlertBox(context);
                             print("No data received or data format is incorrect");
